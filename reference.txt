@@ -1,0 +1,2 @@
+https://cloud.google.com/blog/products/serverless/connecting-to-cloud-run-from-apigee-x-using-psc
+https://www.geeksforgeeks.org/devops/push-docker-images-to-artifact-registry-in-gcp/

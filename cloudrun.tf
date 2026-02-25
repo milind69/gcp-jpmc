@@ -10,8 +10,8 @@ resource "google_cloud_run_v2_service" "my-fastapi-app" {
   name     = "${var.app_name}-app"
   location = "us-central1"
   deletion_protection = false
-  ingress = "INGRESS_TRAFFIC_ALL"
-  #ingress = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  #ingress = "INGRESS_TRAFFIC_ALL"
+  ingress = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
   template {
       containers {
         name  = "${var.app_name}"
@@ -89,7 +89,6 @@ resource "google_compute_url_map" "cloud_run_url_map" {
   name                  = "${var.app_name}-url-map"
   project               = var.project_id
   default_service       = google_compute_backend_service.cloud_run_backend_service.id
-
 }
 
 
