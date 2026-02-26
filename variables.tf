@@ -53,6 +53,11 @@ variable "ilb_subnet_cidr" {
   default = "10.4.0.0/24"
 }
 
+variable "proxy_only_subnet_cidr" {
+  type = string
+  default = "10.5.0.0/23"
+}
+
 variable "region" {
   type = string
   default = "us-central1"
