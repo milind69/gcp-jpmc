@@ -1,0 +1,6 @@
+https://cloud.google.com/blog/products/serverless/connecting-to-cloud-run-from-apigee-x-using-psc
+https://www.geeksforgeeks.org/devops/push-docker-images-to-artifact-registry-in-gcp/
+
+gcloud auth configure-docker us-central1-docker.pkg.dev
+docker tag my-image us-central1-docker.pkg.dev/<project>/<aft-repo>/my-image
+docker push us-central1-docker.pkg.dev/<project>/<aft-repo>/my-image

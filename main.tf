@@ -83,5 +83,6 @@ resource "google_compute_subnetwork" "proxy_only_subnet" {
   network       = google_compute_network.vpc.id
   project       = var.project_id
   purpose       = "REGIONAL_MANAGED_PROXY"
+  role          = "ACTIVE"
 }
 
