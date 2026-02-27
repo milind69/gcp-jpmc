@@ -85,10 +85,3 @@ resource "google_compute_subnetwork" "proxy_only_subnet" {
   purpose       = "REGIONAL_MANAGED_PROXY"
 }
 
-
-resource "google_compute_network" "vpc-consumer" {
-  name                    = "vpc-consumer"
-  project                 = var.project_id
-  auto_create_subnetworks = false
-  depends_on              = [google_project_service.apis]
-}
