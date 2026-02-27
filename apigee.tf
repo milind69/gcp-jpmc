@@ -30,12 +30,12 @@
 # serviceAccount:service-548941500570@gcp-sa-apigee.iam.gserviceaccount.com
 
 #impersoname Apigee runtime SA to impersonate cloud run SA
-resource "google_service_account_iam_member" "apigee_impersonate_cloud_run_sa" {
-  service_account_id = google_service_account.apigee-cloud-runnersa.name
-  role               = "roles/iam.serviceAccountTokenCreator"
-  member             = "serviceAccount:service-${google_project.myproject.number}@gcp-sa-apigee.iam.gserviceaccount.com"
-  #member = "serviceAccount:service-548941500570@gcp-sa-apigee.iam.gserviceaccount.com"
-}
+# resource "google_service_account_iam_member" "apigee_impersonate_cloud_run_sa" {
+#   service_account_id = google_service_account.apigee-cloud-runnersa.name
+#   role               = "roles/iam.serviceAccountTokenCreator"
+#   member             = "serviceAccount:service-${google_project.myproject.number}@gcp-sa-apigee.iam.gserviceaccount.com"
+#   #member = "serviceAccount:service-548941500570@gcp-sa-apigee.iam.gserviceaccount.com"
+# }
 
 
 # resource "google_apigee_api" "apigee_proxy" {
