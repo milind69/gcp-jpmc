@@ -30,32 +30,52 @@ resource "tls_self_signed_cert" "cert" {
     "server_auth",
   ]
 }
-
-# resource "google_compute_region_target_https_proxy" "https_proxy" {
-#   name             = "cloudrun-https-proxy"
-#   project          = var.project_id
-#   region           = var.region
-#   url_map          = google_compute_region_url_map.cloud_run_url_map.id
-#   ssl_certificates = [google_compute_region_ssl_certificate.cert.id]
-
-# }
-
+### enable this for public LB
+# 
 # resource "google_compute_address" "ilb-ip" {
 #   name         = "${var.app_name}-ip"
 #   project      = var.project_id
 #   region       = var.region
 #   address_type = "EXTERNAL"
 # }
-# resource "google_compute_forwarding_rule" "https" {
-#   name                  = "${var.app_name}-https-forwarding-rule"
-#   project               = var.project_id
-#   region                = var.region
-#   target                = google_compute_region_target_https_proxy.https_proxy.id
-#   ip_address            = google_compute_address.ilb-ip.address
-#   network               = google_compute_network.vpc.id
-#   port_range            = "443"
-#   load_balancing_scheme = "EXTERNAL_MANAGED"
-# }
+
+### Private public IP 
+
+resource "google_compute_address" "ilb-ip" {
+  name         = "${var.app_name}-internal-ip"
+  project      = var.project_id
+  region       = var.region
+  address_type = "INTERNAL"
+  subnetwork   = google_compute_subnetwork.ilb_subnet.id # PRIVATE SUBNET
+  purpose      = "SHARED_LOADBALANCER_VIP"
+}
+
+
+
+
+resource "google_compute_region_target_https_proxy" "https_proxy" {
+  name             = "cloudrun-https-proxy"
+  project          = var.project_id
+  region           = var.region
+  url_map          = google_compute_region_url_map.cloud_run_url_map.id
+  ssl_certificates = [google_compute_region_ssl_certificate.cert.id]
+}
+
+
+resource "google_compute_forwarding_rule" "https" {
+  name                  = "${var.app_name}-https-forwarding-rule"
+  project               = var.project_id
+  region                = var.region
+  target                = google_compute_region_target_https_proxy.https_proxy.id
+  ip_address            = google_compute_address.ilb-ip.address
+  network               = google_compute_network.vpc.id
+  subnetwork            = google_compute_subnetwork.ilb_subnet.id # PRIVATE SUBNET
+  port_range            = "443"
+  ip_protocol           = "TCP"
+  load_balancing_scheme = "INTERNAL_MANAGED"
+  #load_balancing_scheme = "EXTERNAL_MANAGED"
+  #allow_psc_global_access = true
+}
 
 
 

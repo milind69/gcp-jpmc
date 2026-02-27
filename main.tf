@@ -24,7 +24,11 @@ resource "google_project_service" "apis" {
     "cloudfunctions.googleapis.com",
     "cloudkms.googleapis.com",
     "container.googleapis.com",
-    "cloudresourcemanager.googleapis.com"
+    "cloudresourcemanager.googleapis.com",
+    "networkconnectivity.googleapis.com",
+    "servicemanagement.googleapis.com",
+    "serviceusage.googleapis.com",
+    "networkmanagement.googleapis.com"
   ])
   service            = each.value
   disable_on_destroy = false
@@ -57,16 +61,16 @@ resource "google_compute_subnetwork" "psc_nat" {
   project       = var.project_id
   purpose       = "PRIVATE_SERVICE_CONNECT"
 }
-
+# Subnet for private IP
 resource "google_compute_subnetwork" "ilb_subnet" {
   name          = "${var.app_name}-ilb-subnet"
   ip_cidr_range = var.ilb_subnet_cidr
   region        = "us-central1"
   network       = google_compute_network.vpc.id
   project       = var.project_id
-  purpose       = "INTERNAL_LOAD_BALANCING"
+  purpose       = "PRIVATE"
 }
-
+# Subnet for proxy rule
 resource "google_compute_subnetwork" "proxy_only_subnet" {
   name          = "${var.app_name}-proxy-only-subnet"
   ip_cidr_range = var.proxy_only_subnet_cidr
@@ -74,5 +78,4 @@ resource "google_compute_subnetwork" "proxy_only_subnet" {
   network       = google_compute_network.vpc.id
   project       = var.project_id
   purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
 }
