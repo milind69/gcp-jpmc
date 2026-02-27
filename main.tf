@@ -34,7 +34,12 @@ resource "google_project_service" "apis" {
   disable_on_destroy = false
 }
 
-
+resource "google_compute_network" "vpc-consumer" {
+  name                    = "vpc-consumer"
+  project                 = var.project_id
+  auto_create_subnetworks = false
+  depends_on              = [google_project_service.apis]
+}
 
 
 resource "google_compute_network" "vpc" {

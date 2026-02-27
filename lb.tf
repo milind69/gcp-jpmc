@@ -75,6 +75,7 @@ resource "google_compute_forwarding_rule" "https" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   #load_balancing_scheme = "EXTERNAL_MANAGED"
   #allow_psc_global_access = true
+  depends_on = [google_compute_subnetwork.proxy_only_subnet]
 }
 
 

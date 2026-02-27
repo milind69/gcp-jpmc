@@ -37,27 +37,27 @@ variable "subnet_cidr" {
 
 variable "apigee_cidr" {
   type    = string
-  default = "10.1.0.0/22"
+  default = "10.0.1.0/22"
 }
 
 variable "psc_nat_subnet_cidr" {
   type    = string
-  default = "10.2.0.0/28"
+  default = "10.0.2.0/28"
 }
 
 variable "apigee_instance_cidr" {
   type    = string
-  default = "10.3.0.0/28"
+  default = "10.0.3.0/28"
 }
 
 variable "ilb_subnet_cidr" {
   type    = string
-  default = "10.4.0.0/24"
+  default = "10.0.4.0/24"
 }
 
 variable "proxy_only_subnet_cidr" {
   type    = string
-  default = "10.5.0.0/23"
+  default = "10.0.5.0/24"
 }
 
 variable "region" {
