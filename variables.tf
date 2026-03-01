@@ -55,15 +55,15 @@ variable "region" {
 
 variable "apigee_instance_cidr" {
   type    = string
-  default = "10.0.3.0/28"
+  default = "10.0.3.0/28" #this is fof debug
 }
 
 variable "apigee_cidr" {
   type    = string
-  default = "10.0.1.0/22"
+  default = "10.1.0.0/22"
 }
 
-variable "apigee_psc_subnet" {
+variable "apigee_psc_subnet_cidr" {
   type    = string
   default = "10.0.6.0/24"
 }

@@ -79,7 +79,9 @@ resource "google_compute_forwarding_rule" "https" {
 }
 
 
-
+output "ilb_ip" {
+  value = google_compute_address.ilb-ip.address
+}
 # # testing using curl/postman/bruno
 # # curl -k -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 # #   https://llb-url/

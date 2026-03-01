@@ -28,7 +28,8 @@ resource "google_project_service" "apis" {
     "networkconnectivity.googleapis.com",
     "servicemanagement.googleapis.com",
     "serviceusage.googleapis.com",
-    "networkmanagement.googleapis.com"
+    "networkmanagement.googleapis.com",
+    "networksecurity.googleapis.com"
   ])
   service            = each.value
   disable_on_destroy = false
@@ -86,4 +87,12 @@ resource "google_compute_subnetwork" "proxy_only_subnet" {
   role          = "ACTIVE"
 }
 
+resource "google_compute_subnetwork" "psc_consumer_subnet" {
+  name          = "${var.app_name}-psc-consumer-subnet"
+  ip_cidr_range = var.apigee_psc_subnet_cidr
+  region        = "us-central1"
+  network       = google_compute_network.vpc-consumer.id
+  project       = var.project_id
+  purpose       = "PRIVATE"
+}
 

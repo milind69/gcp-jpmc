@@ -11,3 +11,6 @@ resource "google_compute_service_attachment" "ilb-psc-attachement" {
 }
 
 
+output "psc_service_attachment" {
+  value = google_compute_service_attachment.ilb-psc-attachement.id
+}

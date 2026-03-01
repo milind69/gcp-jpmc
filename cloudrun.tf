@@ -52,6 +52,27 @@ resource "google_cloud_run_v2_service_iam_member" "my-fastapi-app-external-invok
   member   = "user:kulkarni.milind@gmail.com"
 }
 
+resource "google_service_account" "apigee-cloud-runnersa" {
+  account_id   = "apigee-cloud-runnersa"
+  display_name = "Apigee cloud runner"
+  project      = var.project_id
+}
+
+# To grant this access you need to grant the terraform id a orgpolicy role 
+
+# gcloud organizations add-iam-policy-binding 1069851491353 \
+#   --member="user:terraformid@org.com" \
+# --role="roles/orgpolicy.policyAdmin"
+
+resource "google_cloud_run_v2_service_iam_member" "my-fastapi-app-apigee-cloud-runner" {
+  name     = google_cloud_run_v2_service.my-fastapi-app.name
+  location = var.region
+  project  = var.project_id
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_service_account.apigee-cloud-runnersa.email}"
+}
+
+
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   name                  = "${var.app_name}-neg"
   project               = var.project_id
