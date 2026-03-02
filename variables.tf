@@ -67,3 +67,8 @@ variable "apigee_psc_subnet_cidr" {
   type    = string
   default = "10.0.6.0/24"
 }
+
+variable "consumer_app_subnet_cidr" {
+  type    = string
+  default = "10.0.7.0/24"
+}

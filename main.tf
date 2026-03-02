@@ -59,6 +59,15 @@ resource "google_compute_subnetwork" "app_subnet" {
   private_ip_google_access = true
 }
 
+resource "google_compute_subnetwork" "consumer_app_subnet" {
+  name                     = "${var.app_name}-consumer-subnet"
+  ip_cidr_range            = var.consumer_app_subnet_cidr
+  region                   = "us-central1"
+  network                  = google_compute_network.vpc-consumer.id
+  project                  = var.project_id
+  private_ip_google_access = true
+}
+
 resource "google_compute_subnetwork" "psc_nat" {
   name          = "${var.app_name}-psc-nat-subnet"
   ip_cidr_range = var.psc_nat_subnet_cidr
@@ -95,4 +104,5 @@ resource "google_compute_subnetwork" "psc_consumer_subnet" {
   project       = var.project_id
   purpose       = "PRIVATE"
 }
+
 

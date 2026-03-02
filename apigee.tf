@@ -62,12 +62,18 @@ resource "google_apigee_endpoint_attachment" "cloudrun_endpoint" {
   endpoint_attachment_id = "${var.app_name}-endpoint"
   location               = var.region
   service_attachment     = google_compute_service_attachment.ilb-psc-attachement.id
+  depends_on             = [google_apigee_instance.apigee_instance]
 }
 
 
 output "apigee_endpoint_host" {
   description = "Use this host in Apigee target endpoint"
   value       = google_apigee_endpoint_attachment.cloudrun_endpoint.host
+}
+
+output "apigee_instance_host" {
+  description = "apigee instance host"
+  value       = google_apigee_instance.apigee_instance.host
 }
 
 
