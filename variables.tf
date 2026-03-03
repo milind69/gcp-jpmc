@@ -72,3 +72,8 @@ variable "consumer_app_subnet_cidr" {
   type    = string
   default = "10.0.7.0/24"
 }
+
+variable "alb_proxy_only_subnet_cidr" {
+  type    = string
+  default = "10.0.8.0/24"
+}

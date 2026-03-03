@@ -105,4 +105,12 @@ resource "google_compute_subnetwork" "psc_consumer_subnet" {
   purpose       = "PRIVATE"
 }
 
-
+resource "google_compute_subnetwork" "alb_proxy_only_subnet" {
+  name          = "${var.app_name}-alb-proxy-only-subnet"
+  ip_cidr_range = var.alb_proxy_only_subnet_cidr
+  region        = "us-central1"
+  network       = google_compute_network.vpc-consumer.id
+  project       = var.project_id
+  purpose       = "REGIONAL_MANAGED_PROXY"
+  role          = "ACTIVE"
+}

@@ -9,8 +9,3 @@ resource "google_compute_service_attachment" "ilb-psc-attachement" {
   target_service        = google_compute_forwarding_rule.https.id
   connection_preference = "ACCEPT_AUTOMATIC"
 }
-
-
-output "psc_service_attachment" {
-  value = google_compute_service_attachment.ilb-psc-attachement.id
-}

@@ -3,6 +3,7 @@ resource "google_apigee_organization" "apigee_org" {
   analytics_region   = var.region
   authorized_network = google_compute_network.vpc-consumer.id
   billing_type       = "PAYG"
+  runtime_type       = "CLOUD"
   depends_on         = [google_service_networking_connection.apigee_vpc_connection]
 }
 

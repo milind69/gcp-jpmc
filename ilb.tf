@@ -51,6 +51,13 @@ resource "google_compute_address" "ilb-ip" {
 }
 
 
+# url map
+resource "google_compute_region_url_map" "cloud_run_url_map" {
+  name            = "${var.app_name}-url-map"
+  project         = var.project_id
+  region          = var.region
+  default_service = google_compute_region_backend_service.cloud_run_backend_service.id
+}
 
 
 resource "google_compute_region_target_https_proxy" "https_proxy" {
@@ -79,9 +86,7 @@ resource "google_compute_forwarding_rule" "https" {
 }
 
 
-output "ilb_ip" {
-  value = google_compute_address.ilb-ip.address
-}
+
 # # testing using curl/postman/bruno
 # # curl -k -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 # #   https://llb-url/
