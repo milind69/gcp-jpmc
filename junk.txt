@@ -1,14 +1,4 @@
 
-# resource "google_apigee_endpoint_attachment" "cloudrun_endpoint" {
-#   org_id                 = google_apigee_organization.apigee_org.id
-#   endpoint_attachment_id = "${var.app_name}-endpoint"
-#   location               = var.region
-#   service_attachment     = google_compute_service_attachment.ilb-psc-attachement.id
-#   depends_on             = [google_apigee_instance.apigee_instance]
-# }
-
-
-
 # resource "google_apigee_target_server" "cloudrun" {
 #   name   = "cloudrun-backend"
 #   env_id = google_apigee_environment.apigee_env.id                  # "dev" or "prod"
@@ -26,26 +16,15 @@
 # }
 
 
-
-
-
 # resource "google_apigee_api" "apigee_proxy" {
-#   org_id = google_apigee_organization.apigee_org.id
-#   name = "{${var.app_name}-proxy}"
-#   config_bundle = filebase64("${path/module}/proxy_bundle.zip")
-
+#   org_id        = google_apigee_organization.apigee_org.id
+#   name          = "{${var.app_name}-proxy}"
+#   config_bundle = filebase64("${path / module}/proxy_bundle.zip")
 # }
 
 # resource "google_apigee_api_deployment" "apigee_deployment" {
-#   org_id = google_apigee_organization.apigee_org.id
+#   org_id      = google_apigee_organization.apigee_org.id
 #   environment = google_apigee_environment.apigee_env.name
-#   proxy_id = google_apigee_api.apigee_proxy.name
-#   revision = google_apigee_api.apigee_proxy.latest_revision_id
-# }
-
-
-
-# output "apigee_endpoint_host" {
-#   description = "Use this host in Apigee target endpoint"
-#   value       = google_apigee_endpoint_attachment.cloudrun_endpoint.host
+#   proxy_id    = google_apigee_api.apigee_proxy.name
+#   revision    = google_apigee_api.apigee_proxy.latest_revision_id
 # }
