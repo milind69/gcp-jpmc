@@ -77,3 +77,16 @@ resource "google_apigee_endpoint_attachment" "apigee-psc-attachement" {
   depends_on             = [google_apigee_instance.apigee_instance]
 }
 
+# troubleshoot /28 
+resource "google_compute_firewall" "apigee_troubleshooting" {
+  name    = "allow-apigee-troubleshooting"
+  network = google_compute_network.vpc-consumer.id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["${var.consumer_app_subnet_cidr}"]
+  target_tags   = ["ssh-enabled"]
+}
