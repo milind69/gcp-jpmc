@@ -37,3 +37,7 @@ override.tf.json
 terraform.rc
 .env
 *.env.*
+
+generated
+generated/*
+*.zip

@@ -6,9 +6,7 @@ resource "google_apigee_instance" "apigee_instance" {
   ip_range = var.apigee_instance_cidr
 }
 
-output "apigee_instance_id" {
-  value = google_apigee_instance.apigee_instance
-}
+
 
 
 
@@ -69,3 +67,13 @@ resource "google_compute_forwarding_rule" "psc_consumer" {
   target                = google_compute_service_attachment.ilb-psc-attachement.id
   network               = google_compute_network.vpc-consumer.id
 }
+
+
+resource "google_apigee_endpoint_attachment" "apigee-psc-attachement" {
+  org_id                 = google_apigee_organization.apigee_org.id
+  endpoint_attachment_id = "${var.app_name}-psc-endpoint"
+  location               = var.region
+  service_attachment     = google_compute_service_attachment.ilb-psc-attachement.id
+  depends_on             = [google_apigee_instance.apigee_instance]
+}
+

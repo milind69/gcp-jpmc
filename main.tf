@@ -43,6 +43,7 @@ resource "google_compute_network" "vpc-consumer" {
 }
 
 
+
 resource "google_compute_network" "vpc" {
   name                    = "vpc-producer"
   project                 = var.project_id

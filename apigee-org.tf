@@ -5,6 +5,9 @@ resource "google_apigee_organization" "apigee_org" {
   billing_type       = "PAYG"
   runtime_type       = "CLOUD"
   depends_on         = [google_service_networking_connection.apigee_vpc_connection]
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # Reserve IP range for VPC Peering with Google services 
@@ -36,5 +39,6 @@ resource "google_compute_firewall" "apigee_troubleshooting" {
     ports    = ["22"]
   }
 
-  source_ranges = ["10.0.3.0/28"]
+  source_ranges = ["${var.consumer_app_subnet_cidr}"]
+  target_tags   = ["ssh-enabled"]
 }
