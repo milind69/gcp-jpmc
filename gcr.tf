@@ -1,9 +1,18 @@
-resource "google_artifact_registry_repository" "my-aft-repo" {
-  location      = "us-central1"
-  repository_id = "my-aft-repo"
-  description   = "artifact docker repository"
-  format        = "DOCKER"
-  lifecycle {
-    prevent_destroy = true
-  }
+# resource "google_artifact_registry_repository" "my-aft-repo" {
+#   location      = "us-central1"
+#   repository_id = "my-aft-repo"
+#   description   = "artifact docker repository"
+#   format        = "DOCKER"
+#   lifecycle {
+#    ignore_changes =  all 
+#   }
+# }
+
+data "google_artifact_registry_repository" "my-aft-repo" {
+    location      = "us-central1"
+    repository_id = "my-aft-repo"
+}
+
+output "repository_name" {
+  value = data.google_artifact_registry_repository.my-aft-repo.name
 }
