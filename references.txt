@@ -9,3 +9,13 @@ docker push us-central1-docker.pkg.dev/<project>/<aft-repo>/my-image
 apigee-cloud-runnersa@mpk-project-id.iam.gserviceaccount.com
 
 Service account: projects/-/serviceAccounts/apigee-cloud-runnersa@mpk-project-id.iam.gserviceaccount.com
+
+
+
+
+
+A Record	
+api  35.194.17.127
+
+
+
