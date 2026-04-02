@@ -84,15 +84,15 @@ resource "google_compute_region_target_https_proxy" "alb-https-proxy" {
   ssl_certificates = [google_compute_region_ssl_certificate.alb-cert.id]
 }
 
-# resource "google_compute_forwarding_rule" "alb-forwarding-rule" {
-#   name                  = "${var.app_name}-alb-forwarding-rule"
-#   project               = var.project_id
-#   region                = var.region
-#   target                = google_compute_region_target_https_proxy.alb-https-proxy.id
-#   ip_address            = google_compute_address.alb-ip.address
-#   port_range            = "443"
-#   ip_protocol           = "TCP"
-#   load_balancing_scheme = "EXTERNAL_MANAGED"
-#   network               = google_compute_network.vpc-consumer.id
-#   depends_on            = [google_compute_subnetwork.proxy_only_subnet]
-# }
+resource "google_compute_forwarding_rule" "alb-forwarding-rule" {
+  name                  = "${var.app_name}-alb-forwarding-rule"
+  project               = var.project_id
+  region                = var.region
+  target                = google_compute_region_target_https_proxy.alb-https-proxy.id
+  ip_address            = google_compute_address.alb-ip.address
+  port_range            = "443"
+  ip_protocol           = "TCP"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  network               = google_compute_network.vpc-consumer.id
+  depends_on            = [google_compute_subnetwork.proxy_only_subnet]
+}
