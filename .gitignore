@@ -41,3 +41,5 @@ terraform.rc
 generated
 generated/*
 *.zip
+apiproxy
+apiproxy/*
