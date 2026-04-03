@@ -7,9 +7,6 @@ resource "google_apigee_instance" "apigee_instance" {
 }
 
 
-
-
-
 resource "google_apigee_environment" "apigee_env" {
   org_id = google_apigee_organization.apigee_org.id
   name   = "dev"
@@ -48,36 +45,36 @@ resource "google_service_account_iam_member" "apigee_impersonate_cloud_run_sa" {
   role               = "roles/iam.serviceAccountTokenCreator"
   member             = "serviceAccount:service-927625092652@gcp-sa-apigee.iam.gserviceaccount.com"
 }
-
-resource "google_compute_address" "psc_consumer_ip" {
-  name         = "${var.app_name}-psc-consumer-ip"
-  project      = var.project_id
-  region       = var.region
-  address_type = "INTERNAL"
-  subnetwork   = google_compute_subnetwork.psc_consumer_subnet.id
-}
+## all below commnetd for ps.tf putting this back to got 7.x.x.x
+# resource "google_compute_address" "psc_consumer_ip" {
+#   name         = "${var.app_name}-psc-consumer-ip"
+#   project      = var.project_id
+#   region       = var.region
+#   address_type = "INTERNAL"
+#   subnetwork   = google_compute_subnetwork.psc_consumer_subnet.id
+# }
 
 # PSC consumer forwarding rule
-resource "google_compute_forwarding_rule" "psc_consumer" {
-  name                  = "${var.app_name}-psc-consumer"
-  project               = var.project_id
-  region                = var.region
-  load_balancing_scheme = "" # empty = PSC consumer
-  ip_address            = google_compute_address.psc_consumer_ip.id
-  target                = google_compute_service_attachment.ilb-psc-attachement.id
-  network               = google_compute_network.vpc-consumer.id
-}
+# resource "google_compute_forwarding_rule" "psc_consumer" {
+#   name                  = "${var.app_name}-psc-consumer"
+#   project               = var.project_id
+#   region                = var.region
+#   load_balancing_scheme = "" # empty = PSC consumer
+#   ip_address            = google_compute_address.psc_consumer_ip.id
+#   target                = google_compute_service_attachment.ilb-psc-attachement.id
+#   network               = google_compute_network.vpc-consumer.id
+# }
 
+# commented with psc.tf
+# resource "google_apigee_endpoint_attachment" "apigee-psc-attachement" {
+#   org_id                 = google_apigee_organization.apigee_org.id
+#   endpoint_attachment_id = "${var.app_name}-psc-endpoint"
+#   location               = var.region
+#   service_attachment     = google_compute_service_attachment.ilb-psc-attachement.id
+#   depends_on             = [google_apigee_instance.apigee_instance]
+# }
 
-resource "google_apigee_endpoint_attachment" "apigee-psc-attachement" {
-  org_id                 = google_apigee_organization.apigee_org.id
-  endpoint_attachment_id = "${var.app_name}-psc-endpoint"
-  location               = var.region
-  service_attachment     = google_compute_service_attachment.ilb-psc-attachement.id
-  depends_on             = [google_apigee_instance.apigee_instance]
-}
-
-# troubleshoot /28 
+#troubleshoot /28 
 resource "google_compute_firewall" "apigee_troubleshooting" {
   name    = "allow-apigee-troubleshooting"
   network = google_compute_network.vpc-consumer.id

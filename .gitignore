@@ -43,3 +43,4 @@ generated/*
 *.zip
 apiproxy
 apiproxy/*
+*.pem

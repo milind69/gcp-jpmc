@@ -6,7 +6,7 @@ resource "google_compute_firewall" "allow_apigee_to_psc" {
   direction = "INGRESS"
   allow {
     protocol = "tcp"
-    ports    = ["443"]
+    ports    = ["443", "80"]
   }
   source_ranges = ["10.1.0.0/22", "10.0.3.0/28"]
 }
