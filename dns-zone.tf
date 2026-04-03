@@ -21,6 +21,9 @@ resource "google_dns_policy" "inbound_forwarding" {
   }
 }
 
+
+## I need this to tell GCP PSA ( apigee, sql etc ) to forward their dns queries for specific domain to their vpc network 
+
 resource "google_service_networking_peered_dns_domain" "apigee_dns_peering" {
   name       = "apigee-dns-peering"
   network    = google_compute_network.vpc-consumer.name
